@@ -7,18 +7,25 @@ functions:
 
     * get_seat_data - returns seat data
 """
-def get_seat_data(data, seatlist=[]):
+def get_seat_data(seatdata, rowdata, seatlist=[]):
     """ Gets seat data from xml extract
 
     Parameters
     ----------
-    data : list
-        Extract from OTA xml file
+    seatdata : list
+        Extract seat data from OTA xml file
+    rowdata : list
+        Extract plane row data from OTA xml file
     seatlist: list, optional
         List of dictionaries containing seat information
     """
+    # Extract row attributes for seat class identification
+    rowList = []
+    for elem in rowdata:
+        rowList.append(elem.attrib)
+
     # Traverse xml tree
-    for elem in data:
+    for elem in seatdata:
         # Store individual seat data
         seat = {}
         # Extract seat specific data
@@ -42,13 +49,12 @@ def get_seat_data(data, seatlist=[]):
                 })
 
             if "Summary" in node.tag:
-                row = int(node.get('SeatNumber')[0])
-                if (row < 7):
-                    seat.update({"class": "First"})
-                else:
-                    seat.update({"class": "Economy"})
-
+                # Use row data to identify cabin class
+                rowNumber = node.get('SeatNumber')[:-1]
+                cabin_class = next((row['CabinType']
+                                    for row in rowList if row['RowNumber'] == rowNumber), None)
                 seat.update({
+                    "class": cabin_class,
                     "seatnumber": node.get('SeatNumber'),
                     "isavailable": bool(node.get('AvailableInd')=="true")
                 })
