@@ -17,13 +17,13 @@ git clone https://github.com/wmemorgan/xml-seat-data-parser.git
 ```
 
 ## Usage
-Go to your repo directory and run the script
+Go to the **src** directory in your local repository and run the script
 ```
 python main.py
 ```
 
 ## Output
-Script creates a file named `seatinfo.json`.
+Script creates a file in the **output** directory named `seatinfo.json`.
 
 ## Data Dictionary
 The JSON file contains the following data fields:
