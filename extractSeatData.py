@@ -1,14 +1,13 @@
 import xml.etree.ElementTree as ET
+import json
 
 tree = ET.parse("OTA_AirSeatMapRS.xml")
-data = tree.getroot()
-print(data)
 root = tree.findall(
     './/{http://www.opentravel.org/OTA/2003/05/common/}SeatInfo')
-print(len(root))
+
 seatInfo = []
 # seatInfo = {}
-for i in range(5, 15):
+for i in range(5, 12):
     seat = {}
     for node in root[i].iter():
 
@@ -33,13 +32,13 @@ for i in range(5, 15):
         if "Summary" in node.tag:
             row = int(node.get('SeatNumber')[0])
             if (row < 7):
-                seat.update({"cabinclass": "First"})
+                seat.update({"class": "First"})
             else:
-                seat.update({"cabinclass": "Economy"})
+                seat.update({"class": "Economy"})
 
             seat.update({
                 "seatnumber": node.get('SeatNumber'),
-                "available": bool(node.get('AvailableInd')=="true")
+                "isavailable": bool(node.get('AvailableInd')=="true")
             })
 
         if "Features" in node.tag:
@@ -50,12 +49,12 @@ for i in range(5, 15):
 
             isPreferred = bool(node.get('extension') == "Preferred")
             seat.update({
-                "preferred": True if isPreferred else False
+                "ispreferred": True if isPreferred else False
             })
 
             byBathroom = bool(node.get('extension') == "Lavatory")
             seat.update({
-                "bathroom": True if byBathroom else False
+                "isbathroom": True if byBathroom else False
             })
 
         if "Fee" in node.tag:
@@ -69,4 +68,10 @@ for i in range(5, 15):
     # seatInfo.update({f"Record{i}": seat})
     seatInfo.append(seat)
 
-print(seatInfo)
+# print(seatInfo)
+json_data = json.dumps(seatInfo)
+print(json_data)
+
+with open("info.json", "w") as json_file:
+    json_file.write(json_data)
+    json_file.close()
