@@ -75,7 +75,7 @@ def get_seat_data(data, seatlist=[]):
                 })
             else:
                 seat.update({
-                    "price": 0
+                    "price": 0  # Displays '0' amount if seat is unavailable
                 })
         seatlist.append(seat)
     return seatlist
