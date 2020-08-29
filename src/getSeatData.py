@@ -7,6 +7,7 @@ functions:
 
     * get_seat_data - returns seat data
 """
+
 def get_seat_data(seatdata, rowdata, seatlist=[]):
     """ Gets seat data from xml extract
 
@@ -53,11 +54,19 @@ def get_seat_data(seatdata, rowdata, seatlist=[]):
                 rowNumber = node.get('SeatNumber')[:-1]
                 cabin_class = next((row['CabinType']
                                     for row in rowList if row['RowNumber'] == rowNumber), None)
+
+                isavailable = bool(node.get('AvailableInd') == "true")
+
                 seat.update({
                     "class": cabin_class,
                     "seatnumber": node.get('SeatNumber'),
-                    "isavailable": bool(node.get('AvailableInd')=="true")
+                    "isavailable": isavailable
                 })
+
+                if isavailable == False:
+                    seat.update({
+                        "price": 0  # Displays '0' amount if seat is unavailable
+                    })
 
             if "Features" in node.tag:
                 if node.text in ['Aisle', 'Center', 'Window']:
@@ -79,10 +88,7 @@ def get_seat_data(seatdata, rowdata, seatlist=[]):
                 seat.update({
                     "price": int(node.attrib.get('Amount'))
                 })
-            else:
-                seat.update({
-                    "price": 0  # Displays '0' amount if seat is unavailable
-                })
+
         seatlist.append(seat)
     return seatlist
 
