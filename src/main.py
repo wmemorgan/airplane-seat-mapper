@@ -54,7 +54,6 @@ def main():
     row_data = read_xml_file("OTA_AirSeatMapRS.xml",
                           './/{http://www.opentravel.org/OTA/2003/05/common/}RowInfo')  
     seat_info = get_seat_data(seat_data, row_data)
-    print(seat_info)
     create_json_file(seat_info, "seatinfo.json")
 
 if __name__ == "__main__":
