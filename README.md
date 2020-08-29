@@ -23,4 +23,4 @@ python main.py
 ```
 
 ## License
-[MIT]()
+[MIT](https://github.com/wmemorgan/xml-seat-data-parser/blob/master/LICENSE)
