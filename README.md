@@ -2,7 +2,7 @@
 API which extracts airline seat information from an
 online travel agency's (OTA) legacy booking system.
 
-## Development
+## Development Environment
 ### Language
 - Python 3.8.1
 
