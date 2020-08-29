@@ -1,10 +1,28 @@
+"""Get Seat Data
 
-def extract_seat_data(data, seatlist = []):
+This script parses seat information from the OTA xml extract 
 
-    for i in range(5, 12):
+This file can also be imported as a module and contains the following
+functions:
+
+    * get_seat_data - returns seat data
+"""
+def get_seat_data(data, seatlist=[]):
+    """ Gets seat data from xml extract
+
+    Parameters
+    ----------
+    data : list
+        Extract from OTA xml file
+    seatlist: list, optional
+        List of dictionaries containing seat information
+    """
+    # Traverse xml tree
+    for elem in data:
+        # Store individual seat data
         seat = {}
-        for node in data[i].iter():
-
+        # Extract seat specific data
+        for node in elem.iter():
             if "SeatInfo" in node.tag:
                 if node.get('BulkheadInd') == "true":
                     seat.update({
