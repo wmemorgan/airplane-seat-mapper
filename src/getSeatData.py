@@ -6,9 +6,12 @@ This file can also be imported as a module and contains the following
 functions:
 
     * get_seat_data - returns seat data
+    * read_xml_file - returns list of elements
 """
 
-def get_seat_data(seatdata, rowdata, seatlist=[]):
+import xml.etree.ElementTree as ET
+
+def get_seat_data(seatlist=[]):
     """ Gets seat data from xml extract
 
     Parameters
@@ -20,13 +23,19 @@ def get_seat_data(seatdata, rowdata, seatlist=[]):
     seatlist: list, optional
         List of dictionaries containing seat information
     """
+
+    seat_data = read_xml_file("OTA_AirSeatMapRS.xml",
+                              './/{http://www.opentravel.org/OTA/2003/05/common/}SeatInfo')
+    row_data = read_xml_file("OTA_AirSeatMapRS.xml",
+                             './/{http://www.opentravel.org/OTA/2003/05/common/}RowInfo')
+
     # Extract row attributes for seat class identification
     rowList = []
-    for elem in rowdata:
+    for elem in row_data:
         rowList.append(elem.attrib)
 
     # Traverse xml tree
-    for elem in seatdata:
+    for elem in seat_data:
         # Store individual seat data
         seat = {}
         # Extract seat specific data
@@ -92,3 +101,23 @@ def get_seat_data(seatdata, rowdata, seatlist=[]):
         seatlist.append(seat)
     return seatlist
 
+
+def read_xml_file(input_file, elem):
+    """Reads xml data and extracts specified elements
+    
+    Parameters
+    ----------
+    input_file : str
+        The OTA xml file
+    elem : str
+        Specified elements to be extracted
+
+    Returns
+    -------
+    list
+        a list of xml seat data
+    """
+    tree = ET.parse(input_file)
+    root = tree.findall(elem)
+
+    return root
