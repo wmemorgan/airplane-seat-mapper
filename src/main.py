@@ -43,7 +43,7 @@ def read_xml_file(input_file, elem):
 def create_json_file(data, output_file):
     json_data = json.dumps(data)
 
-    with open(output_file, "w") as json_file:
+    with open(f"../output/{output_file}", "w") as json_file:
         json_file.write(json_data)
         json_file.close()
 
