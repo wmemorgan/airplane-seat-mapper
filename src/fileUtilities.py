@@ -3,8 +3,8 @@
 This module handles file importing and exporting.
 
 The module imports the following functions:
-    * xml.etree.ElementTree
-    * json
+    * xml.etree.ElementTree - parsing and creating XML data
+    * json - JSON encoder and decoder
 
 The module contains the following functions:
     * read_xml_file - reads xml data and extracts specified elements
