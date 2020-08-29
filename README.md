@@ -22,7 +22,11 @@ Go to your repo directory and run the script
 python main.py
 ```
 
+## Output
+Script creates a file named `seatinfo.json`.
+
 ## Data Dictionary
+The JSON file contains the following data fields:
 | Field | Type | Description |
 | --- | --- | --- |
 | **class** | string | Cabin class
