@@ -1,10 +1,9 @@
 import os
-import json
-from unittest import TestCase, main
+import unittest
 from getSeatData import get_seat_data
 from fileUtilities import read_xml_file, create_json_file
 
-class SeatDataTests(TestCase):
+class SeatDataTests(unittest.TestCase):
     def setUp(self):
         self.seats = read_xml_file("OTA_AirSeatMapRS.xml",
                                    './/{http://www.opentravel.org/OTA/2003/05/common/}SeatInfo')
@@ -31,6 +30,6 @@ class SeatDataTests(TestCase):
 
 
 if __name__ == '__main__':
-  main()
+  unittest.main()
 
 
