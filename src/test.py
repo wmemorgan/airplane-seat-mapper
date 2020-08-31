@@ -40,6 +40,8 @@ class SeatDataTests(unittest.TestCase):
         for seat in self.seat_data:
             if seat["isavailable"]:
                 self.assertTrue(seat["price"] > 0)
+            else:
+                self.assertTrue(seat["price"] == 0)
 
 
 
