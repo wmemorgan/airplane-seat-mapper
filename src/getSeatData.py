@@ -2,16 +2,12 @@
 
 This script parses seat information from the OTA xml extract. 
 
-This script imports the following functions:
-    * read_xml_file - returns list of elements
-
 This file can also be imported as a module and contains the following
 functions:
-
     * get_seat_data - returns seat data
 """
 import xml.etree.ElementTree as ET
-from fileUtilities import read_xml_file
+
 tree = ET.parse("OTA_AirSeatMapRS.xml")
 
 
